@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Sales Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            margin-bottom: 2rem;
+        }
+        input, select, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 0.5rem;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Print Sales Tracker</h1>
+    </header>
+    <div class="container">
+        <h2>Log a Sale</h2>
+        <form id="salesForm">
+            <label for="printName">Print Name:</label>
+            <select id="printName">
+                <option value="Heart Is Where The Hole Is">Heart Is Where The Hole Is</option>
+                <option value="Mr. Good Guy Begins">Mr. Good Guy Begins</option>
+                <option value="Why! / How Green Was My Valley">Why! / How Green Was My Valley</option>
+                <!-- Add more options as needed -->
+            </select>
+
+            <label for="type">Type:</label>
+            <select id="type">
+                <option value="Regular">Regular</option>
+                <option value="Signed">Signed</option>
+            </select>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" min="1" required>
+
+            <button type="submit">Log Sale</button>
+        </form>
+
+        <h2>Sales Summary</h2>
+        <table id="salesTable">
+            <thead>
+                <tr>
+                    <th>Print Name</th>
+                    <th>Type</th>
+                    <th>Quantity</th>
+                    <th>Total Price (USD)</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        const salesForm = document.getElementById('salesForm');
+        const salesTableBody = document.querySelector('#salesTable tbody');
+
+        salesForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form data
+            const printName = document.getElementById('printName').value;
+            const type = document.getElementById('type').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const price = type === 'Regular' ? 25 : 35;
+            const totalPrice = price * quantity;
+
+            // Add row to sales table
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${printName}</td>
+                <td>${type}</td>
+                <td>${quantity}</td>
+                <td>$${totalPrice.toFixed(2)}</td>
+            `;
+            salesTableBody.appendChild(row);
+
+            // Reset form
+            salesForm.reset();
+        });
+    </script>
+</body>
+</html>
